@@ -1,0 +1,6 @@
+www
+mail
+sub
+ftp
+ns1
+admin

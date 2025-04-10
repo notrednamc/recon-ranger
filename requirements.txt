@@ -1,0 +1,4 @@
+# Deb install with sudo apt get
+dnspython
+python-nmap
+python-termcolor
