@@ -12,8 +12,6 @@ def show_banner(mode):
     }
 
     banner = banners.get(mode, banner_name)()
-    print(colored(banner, 'cyan'))
-    print(colored(f"Johnny 5 - Mode: {mode.upper()} 🚀\n", 'yellow', attrs=['bold']))
 
 def banner_alive():
     banner = r"""
@@ -109,4 +107,15 @@ def banner_name():
  |_| \_\___|\__,_|_| |_|\___|_|  |_| |_|\___|\__\___/|_|   
 """
     print(color_text(banner, "cyan"))
-    print(color_text("        [ Red Team Modular Toolkit 🕵️‍♂️ ]\n", "yellow"))
+    print(color_text("        [ Red Team Modular Toolkit 🕵️‍♂️ ]", "yellow"))
+
+def banner_johnny5():
+    banner = """
+     _       _                       ____  
+    | | ___ | |__  _ __  _ __  _   _| ___| 
+ _  | |/ _ \| '_ \| '_ \| '_ \| | | |___ \ 
+| |_| | (_) | | | | | | | | | | |_| |___) |
+ \___/ \___/|_| |_|_| |_|_| |_|\__, |____/ 
+                               |___/       
+
+"""

@@ -23,7 +23,7 @@ def main():
     args = parser.parse_args()
 
     if args.module == "dns":
-        show_banner("hack")
+        show_banner("recon")
         module = dns_enum.DNSModule(args.target, {"wordlist": args.wordlist, "debug": args.debug})
         module.run()
     else:

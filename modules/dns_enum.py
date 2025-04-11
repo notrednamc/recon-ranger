@@ -30,8 +30,8 @@ class DNSModule(RedTeamModule):
             file.write(text + "\n")
 
     def zone_transfer(self):
-        # self.log_report("## Zone Transfer Attempt\n")
-        print(color_text(f"## DNS Zone Transfer for {self.target}", "cyan"))
+        # self.log_report("### Zone Transfer Attempt\n")
+        print(color_text(f"### DNS Zone Transfer for {self.target}", "cyan"))
 
         if self.target.endswith(".local"):
             print(color_text(f"- 🔎 Resolving .local target: {self.target}", "yellow"))
@@ -47,7 +47,7 @@ class DNSModule(RedTeamModule):
             axfr_query = f"dig @{self.target} AXFR"
             output = subprocess.check_output(axfr_query, shell=True, stderr=subprocess.STDOUT)
             output_decoded = output.decode()
-            print(color_text(f"### Zone Transfer Output: {output_decoded}", "green"))
+            print(color_text(f"#### Zone Transfer Output: {output_decoded}", "green"))
             # self.log_report("```bash\n" + output_decoded + "\n```\n")
         except subprocess.CalledProcessError as e:
             output_decoded = e.output.decode()
@@ -59,13 +59,13 @@ class DNSModule(RedTeamModule):
                 # self.log_report(f"❌ {msg}\n")
 
     def query_dns_records(self):
-        print(color_text(f"## DNS Record Enumeration", "cyan"))
-        # self.log_report("## DNS Record Enumeration\n")
+        print(color_text(f"### DNS Record Enumeration", "cyan"))
+        # self.log_report("### DNS Record Enumeration\n")
         record_types = ['A', 'MX', 'NS', 'TXT', 'CNAME', 'SOA']
         for record in record_types:
             try:
-                print(color_text(f"### Querying {record} records for {self.target}", "cyan"))
-                # self.log_report(f"### {record} Records")
+                print(color_text(f"#### Querying {record} records for {self.target}", "cyan"))
+                # self.log_report(f"#### {record} Records")
                 result = resolver.resolve(self.target, record)
                 for ip in result:
                     msg = f"{record} record: {ip}"
@@ -77,7 +77,7 @@ class DNSModule(RedTeamModule):
                 # self.log_report(f"- ❌ {msg}")
 
     def subdomain_enum(self):
-        # self.log_report("## Subdomain Brute-Forcing\n")
+        # self.log_report("#### Subdomain Brute-Forcing\n")
         wordlist = self.options.get("wordlist")
         if not wordlist or not self._validate_file(wordlist):
             msg = "Wordlist not found or unreadable"
@@ -85,7 +85,7 @@ class DNSModule(RedTeamModule):
             # self.log_report(f"❌ {msg}")
             return
 
-        print(color_text(f"## Brute-forcing subdomains using {wordlist}", "cyan"))
+        print(color_text(f"#### Brute-forcing subdomains using {wordlist}", "cyan"))
         print(color_text(f"- Wordlist: `{wordlist}`", "yellow"))
         # self.log_report(f"Using wordlist: `{wordlist}`\n")
         try:
@@ -107,8 +107,8 @@ class DNSModule(RedTeamModule):
             # self.log_report(f"❌ {msg}")
 
     def reverse_dns_lookup(self):
-        print(color_text(f"## Performing Reverse DNS lookup for {self.target}", "cyan"))
-        # self.log_report("## Reverse DNS Lookup\n")
+        print(color_text(f"### Performing Reverse DNS lookup for {self.target}", "cyan"))
+        # self.log_report("### Reverse DNS Lookup\n")
         try:
             ip = socket.gethostbyname(self.target)
             reverse_dns = socket.gethostbyaddr(ip)
@@ -121,8 +121,8 @@ class DNSModule(RedTeamModule):
             # self.log_report(f"- ❌ {msg}")
 
     def check_dnssec(self):
-        print(color_text(f"## DNSSEC Check for: {self.target}", "cyan"))
-        # self.log_report("## DNSSEC Check\n")
+        print(color_text(f"### DNSSEC Check for: {self.target}", "cyan"))
+        # self.log_report("### DNSSEC Check\n")
         try:
             result = subprocess.check_output(f"dig +dnssec {self.target}", shell=True)
             decoded = result.decode()
@@ -140,8 +140,8 @@ class DNSModule(RedTeamModule):
             # self.log_report(f"- ❌ {msg}")
 
     def dns_service_version(self):
-        print(color_text(f"## DNS Service Version Detection for {self.target}", "cyan"))
-        # self.log_report("## DNS Service Version Detection\n")
+        print(color_text(f"### DNS Service Version Detection for {self.target}", "cyan"))
+        # self.log_report("### DNS Service Version Detection\n")
         nm = nmap.PortScanner()
         try:
             nm.scan(self.target, '53', '-sV')
