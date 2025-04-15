@@ -1,23 +1,59 @@
 from abc import ABC, abstractmethod
+from rich import print as rprint
 
 class RedTeamModule(ABC):
-    def __init__(self, target, options=None, shared_results=None, api_keys=None):
+    def __init__(self, target, options=None):
         self.target = target
         self.options = options or {}
-        self.results = shared_results if shared_results is not None else {}
-        self.api_keys = api_keys or {}
+        self.results = []
+        self.methods = {}
+
+    def bind_method(self, name, method):
+        self.methods[name] = method.__get__(self)
+    
+    def run_method(self, method_name):
+        method = self.methods.get(method_name)
+        if not method:
+            print(f"[!] Method `{method_name}` not found.")
+            return
+
+        # Fancy console-friendly headers
+        if hasattr(self, "target"):
+            rprint(f"\n[bold]# Recon Report for [white]`{self.target}`[/white][/bold]")
+
+        rprint(f"\n[bold][yellow]## Running `{self.__class__.__name__}`[/yellow][/bold]")
+
+        try:
+            method()
+        except Exception as e:
+            print(f"[!] Error running `{method_name}`: {e}")
+
+    def print_methods(self):
+        rprint(f"\n[bold]Available Methods for [cyan]{self.__class__.__name__}[/cyan]:[/bold]")
+        for attr in dir(self):
+            if not attr.startswith("_") and callable(getattr(self, attr)):
+                rprint(f"  • [green]{attr}[/green]")
 
     @abstractmethod
     def run(self):
         pass
 
-    def log_markdown(self, text, level="info"):
-        prefix = {
-            "header": "##",
-            "success": "- ✔️",
-            "fail": "- ❌",
-            "warn": "- ⚠️",
-            "info": "- ℹ️",
-            "action": "- 🔍"
-        }.get(level, "-")
-        print(f"{prefix} {text}")
+    def log_info(self, message):
+        rprint(f"[blue][[INFO]][/blue] {message}")
+
+    def log_success(self, message):
+        rprint(f"[green]✅ {message}[/green]")
+
+    def log_warning(self, message):
+        rprint(f"[yellow]⚠️ {message}[/yellow]")
+
+    def log_error(self, message):
+        rprint(f"[red]❌ {message}[/red]")
+
+    def markdown_header(self, title, level=2):
+        prefix = "#" * level
+        rprint(f"\n[purple]{prefix} {title}[/purple]")
+
+    def add_result(self, result):
+        if result:
+            self.results.append(result)
