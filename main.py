@@ -124,7 +124,15 @@ def main():
                 extra_options[key.lstrip('-')] = val
 
     module_instance = module_class(target, options=extra_options)
-    module_instance.run_method(method)
+
+    if method.lower() == "all":
+        console.print(f"[bold green]# Running all methods in '{module_type}' module against '{target}'[/bold green]")
+        for method_name in module_instance.methods:
+            console.print(f"\n[bold blue]## Running method: {method_name}[/bold blue]")
+            module_instance.run_method(method_name)
+    else:
+        module_instance.run_method(method)
+
     
 if __name__ == "__main__":
     main()

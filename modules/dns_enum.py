@@ -33,7 +33,8 @@ class DNSModule(RedTeamModule):
             'check_dns_sec',
             'dns_service_version',
             'resolve_local_hostname',
-            'query_crtsh'
+            'query_crtsh',
+            'all'
         ]:
             if hasattr(self, method):
                 print(f"  - {method}")
