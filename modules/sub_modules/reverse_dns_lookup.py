@@ -2,7 +2,7 @@ from core.utils import color_text
 import socket
 
 def reverse_dns_lookup(self):
-    print(color_text("### Performing Reverse DNS Lookup", "cyan"))
+    print(color_text("\n### Performing Reverse DNS Lookup", "cyan"))
     try:
         ip = socket.gethostbyname(self.target)
         hostname, _, _ = socket.gethostbyaddr(ip)

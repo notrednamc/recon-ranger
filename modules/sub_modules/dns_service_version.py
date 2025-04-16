@@ -2,7 +2,7 @@ from core.utils import color_text
 import nmap
 
 def dns_service_version(self):
-    print(color_text("### DNS Service Version Detection", "cyan"))
+    print(color_text("\n### DNS Service Version Detection", "cyan"))
     nm = nmap.PortScanner()
     try:
         nm.scan(self.target, '53', '-sV')

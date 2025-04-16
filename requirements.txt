@@ -2,3 +2,4 @@
 dnspython
 python-nmap
 python-termcolor
+pip install python-whois --break-system-packages

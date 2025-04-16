@@ -8,3 +8,9 @@ host_discovery	Ping sweep, ARP scan for live hosts
 port_scan	    TCP/UDP scans using sockets or Nmap
 api_tester	    Swagger/OpenAPI brute force, fuzzing
 dir_enum	    Web directory enumeration with wordlists
+
+
+
+
+
+API Keys need to be in name:key format in console/api_keys.txt

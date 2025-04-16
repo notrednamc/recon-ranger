@@ -1,6 +1,7 @@
 
 from utils.file_helpers import get_default_wordlist
 from core.utils import color_text
+import socket
 
 def subdomain_enum(self):
     wordlist = self.options.get("wordlist") or get_default_wordlist()
@@ -10,7 +11,7 @@ def subdomain_enum(self):
         print(color_text(f"❌ {msg}", "red"))
         return
 
-    print(color_text(f"#### Brute-forcing subdomains using {wordlist}", "cyan"))
+    print(color_text(f"\n#### Brute-forcing subdomains using {wordlist}", "cyan"))
     print(color_text(f"- Wordlist: `{wordlist}`", "yellow"))
     
     try:

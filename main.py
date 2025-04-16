@@ -7,77 +7,20 @@ from core.banner import show_banner
 import argparse
 import sys
 from modules.dns_enum import DNSModule
-# from modules.osint import OSINTModule
+from modules.osintel import OSINTModule
+from modules.sub_modules import whois_lookup
 from rich.console import Console
+from core import banner
+from core.help_text import print_dns_help, print_general_help, print_osint_help
 
 console = Console()
 
-BANNER = """
-[bold red]
-██████  ███████ ██████       ████████ ███████  █████  ███    ███        ██████  ███████ ██████    ██████    ███    ██
-██   ██ ██      ██    ██        ██    ██      ██   ██ ████  ████        ██   ██ ██      ██      ██      ██  ████   ██
-██████  █████   ██    ██        ██    █████   ███████ ██ ████ ██        ██████  █████   ██      ██      ██  ██ ███ ██
-██   ██ ██      ██    ██        ██    ██      ██   ██ ██  ██  ██        ██   ██ ██      ██      ██      ██  ██   ████
-██   ██ ███████ ███████         ██    ███████ ██   ██ ██      ██        ██   ██ ███████ ██████    ██████    ██    ███
-[/bold red]
-"""
-
-def print_general_help():
-    console.print("""
-[bold cyan]Usage:[/bold cyan]
-  ./main.py <module> <method> <target> [--options]
-
-[bold cyan]Modules:[/bold cyan]
-  dns         Perform DNS-based recon
-  osint       Open Source Intelligence (OSINT) recon
-  kitchen     Run everything at once
-  close       Finish recon session
-
-[bold cyan]Examples:[/bold cyan]
-  ./main.py -h
-  ./main.py dns -h
-  ./main.py dns subdomain_enum example.com
-  ./main.py osint whois example.com
-  ./main.py dns --list
-""")
-
-def print_dns_help():
-    console.print("""
-[bold cyan]DNS Module Help:[/bold cyan]
-
-[bold yellow]Methods:[/bold yellow]
-  dns_zone_transfer
-  query_dns_records
-  subdomain_enum
-  reverse_dns_lookup
-  check_dns_sec
-  dns_service_version
-  resolve_local_hostname
-  query_crtsh
-
-[bold cyan]Example:[/bold cyan]
-  ./main.py dns subdomain_enum example.com
-""")
-
-def print_osint_help():
-    console.print("""
-[bold cyan]OSINT Module Help:[/bold cyan]
-
-[bold yellow]Methods:[/bold yellow]
-  whois
-  email_harvest
-  social_links
-  pastebin_leaks
-  breachdump_lookup
-
-[bold cyan]Example:[/bold cyan]
-  ./main.py osint whois example.com
-""")
+banner.show_banner("label")
 
 # Map module types to class and help function
 module_map = {
-    "dns": (DNSModule, print_dns_help),
-    # "osint": (OSINTModule, print_osint_help),
+    "dns"   : (DNSModule, print_dns_help),
+    "osint" : (OSINTModule, print_osint_help),
 }
 
 def main():
@@ -97,9 +40,6 @@ def main():
 
     if len(args) == 3 and args[2] in ("-h", "--help"):
         help_func()
-        console.print(f"\n[bold cyan]Available Methods in '{module_type}' module:[/bold cyan]")
-        dummy = module_class("example.com")
-        dummy.print_methods()
         return
 
     if len(args) == 3 and args[2] == "--list":
@@ -126,9 +66,8 @@ def main():
     module_instance = module_class(target, options=extra_options)
 
     if method.lower() == "all":
-        console.print(f"[bold green]# Running all methods in '{module_type}' module against '{target}'[/bold green]")
+        console.print(f"[bold green][ Running all methods in '{module_type}' module against '{target}' ][/bold green]")
         for method_name in module_instance.methods:
-            console.print(f"\n[bold blue]## Running method: {method_name}[/bold blue]")
             module_instance.run_method(method_name)
     else:
         module_instance.run_method(method)

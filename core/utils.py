@@ -1,4 +1,27 @@
 import logging
+from pathlib import Path
+
+## Load the API Keys file in config/api_keys.txt
+def load_api_keys(file_path='config/api_keys.txt'):
+    api_keys = {}
+
+    path = Path(file_path)
+    if not path.is_file() or path.stat().st_size == 0:
+        print(color_text(f"\n[ No API keys found in config/api_keys.txt ]", "red"))
+        return api_keys  # Empty dict if none found
+
+    with path.open("r") as f:
+        for line in f:
+            line = line.strip()
+            if not line or line.startswith("#"):
+                continue  # Skip blank lines and comments
+            if ":" in line:
+                label, key = line.split(":", 1)
+                api_keys[label.strip()] = key.strip()
+            else:
+                print(f"[!] Skipping malformed line: {line}")
+    # print(api_keys)
+    return api_keys
 
 def setup_logger():
     logging.basicConfig(
@@ -17,3 +40,4 @@ def color_text(text, color):
         "reset": "\033[0m",
     }
     return f"{colors.get(color, '')}{text}{colors['reset']}"
+

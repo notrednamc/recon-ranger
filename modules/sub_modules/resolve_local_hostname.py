@@ -3,6 +3,7 @@ from core.utils import color_text
 import subprocess
 
 def resolve_local_hostname(self, hostname):
+    print(color_text("\n### Resolving .local hostname", "cyan"))
     try:
         if platform.system() == "Linux":
             cmd = ["avahi-resolve", "-n", hostname]
