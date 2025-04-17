@@ -9,7 +9,10 @@ def dns_service_version(self):
         if self.target in nm.all_hosts():
             services = nm[self.target].get('tcp', {}).get(53, {})
             if 'product' in services:
-                print(color_text(f"- ✅ DNS Service: {services['product']} {services.get('version', '')}", "green"))
+                if services.get('state') in ('filtered', 'closed'):
+                    print(color_text("- ⚠️  DNS Port 53 is `filtered` or `closed` state", "yellow"))
+                else:
+                    print(color_text(f"- ✅ DNS Service: {services['product']} {services.get('version', '')}", "green"))
             else:
                 print(color_text("- ❌ No service info detected on port 53", "red"))
         else:

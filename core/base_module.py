@@ -1,6 +1,7 @@
 from abc import ABC, abstractmethod
 from rich import print as rprint
 from core.utils import load_api_keys
+from core.utils import color_text
 
 class RedTeamModule(ABC):
     def __init__(self, target, options=None):
@@ -15,6 +16,11 @@ class RedTeamModule(ABC):
         self.methods[name] = method.__get__(self)
     
     def run_method(self, method_name):
+        ## Remove when support for .local is functional
+        if self.target.endswith(".local"):
+            print(color_text(f"- ❌ .local hostnames not supported", "red"))
+            return
+        
         method = self.methods.get(method_name)
         if not method:
             print(f"[!] Method `{method_name}` not found.")

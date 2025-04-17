@@ -2,20 +2,25 @@ import platform
 from core.utils import color_text
 import subprocess
 
-def resolve_local_hostname(self, hostname):
-    print(color_text("\n### Resolving .local hostname", "cyan"))
+def resolve_local_hostname(target):
+    print(color_text("\n### Resolving hostname", "cyan"))
     try:
         if platform.system() == "Linux":
-            cmd = ["avahi-resolve", "-n", hostname]
+            cmd = ["avahi-resolve", "-n", target.target]
         elif platform.system() == "Darwin":
-            cmd = ["dns-sd", "-G", "v4", hostname]
+            cmd = ["dns-sd", "-G", "v4", target.target]
         else:
             print(color_text("- ❌ Unsupported OS for .local resolution", "red"))
             return None
-
+        
         result = subprocess.check_output(cmd, stderr=subprocess.STDOUT).decode()
+        # print(f"[debug] {result}")
+        if "No result" in result:
+            print(color_text("- ⚠️ No result from avahi-resolve", "yellow"))
+            return None
 
         if platform.system() == "Linux" and result:
+            # print(f"[debug] {result}")
             return result.strip().split()[-1]
         elif platform.system() == "Darwin":
             for line in result.splitlines():

@@ -18,7 +18,7 @@ class DNSModule(RedTeamModule):
             'reverse_dns_lookup'     : 'modules.sub_modules.reverse_dns_lookup.reverse_dns_lookup',
             'check_dns_sec'          : 'modules.sub_modules.check_dns_sec.check_dns_sec',
             'dns_service_version'    : 'modules.sub_modules.dns_service_version.dns_service_version',
-            'resolve_local_hostname' : 'modules.sub_modules.resolve_local_hostname.resolve_local_hostname',
+            # 'resolve_local_hostname' : 'modules.sub_modules.resolve_local_hostname.resolve_local_hostname',
             'query_crtsh'            : 'modules.sub_modules.query_crtsh.query_crtsh',
         })
 

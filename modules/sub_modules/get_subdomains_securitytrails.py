@@ -2,7 +2,7 @@ from rich import print as rprint
 import requests
 
 def get_subdomains_securitytrails(domain, api_key):
-    rprint(f"\n[bold purple]\n#### Fetching subdomains from SecurityTrails...[/bold purple]")
+    rprint(f"\n[bold purple]#### Fetching subdomains from SecurityTrails...[/bold purple]")
     url = f"https://api.securitytrails.com/v1/domain/{domain}/subdomains"
     headers = {"APIKEY": api_key}
 
