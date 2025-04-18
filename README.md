@@ -28,7 +28,7 @@
 
 1. Clone the repo:
 ```sh
-git clone https://github.com/yourname/ReconRanger.git && cd ReconRanger
+git clone https://github.com/notrednamc/ReconRanger.git && cd ReconRanger
 ```
 2. Install Dependencies:
 ```sh
