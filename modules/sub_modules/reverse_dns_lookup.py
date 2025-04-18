@@ -6,6 +6,6 @@ def reverse_dns_lookup(self):
     try:
         ip = socket.gethostbyname(self.target)
         hostname, _, _ = socket.gethostbyaddr(ip)
-        print(color_text(f"- ✅ {ip} resolves to {hostname}", "green"))
+        print(color_text(f"- {ip} resolves to {hostname}", "green"))
     except Exception as e:
-        print(color_text(f"- ❌ Reverse lookup failed: {e}", "red"))
+        print(color_text(f"- Reverse lookup failed: {e}", "red"))

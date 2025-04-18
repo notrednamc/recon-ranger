@@ -2,13 +2,11 @@
 
 import argparse
 # import logging
-from core.utils import color_text, setup_logger
 from core.banner import show_banner
 import argparse
 import sys
 from modules.dns_enum import DNSModule
 from modules.osintel import OSINTModule
-from modules.sub_modules import whois_lookup
 from rich.console import Console
 from core import banner
 from core.help_text import print_dns_help, print_general_help, print_osint_help
@@ -65,6 +63,7 @@ def main():
 
     module_instance = module_class(target, options=extra_options)
 
+    ## Runall methods in module
     if method.lower() == "all":
         console.print(f"[bold green][ Running all methods in '{module_type}' module against '{target}' ][/bold green]")
         for method_name in module_instance.methods:

@@ -3,6 +3,7 @@ import requests
 import re
 
 def email_harvest(self):
+    ## Ensure valid target is present.
     if not hasattr(self, "target"):
         print("[red]- No target set.[/red]")
         return
@@ -16,9 +17,10 @@ def email_harvest(self):
         resp = requests.get(url, timeout=10)
 
         if resp.status_code != 200:
-            print(f"[red][!] Failed to fetch data from crt.sh[/red]")
+            print(f"[red]- Failed to fetch data from crt.sh[/red]")
             return
 
+        ## Load the response into data for email scrape
         data = resp.json()
         emails = set()
 
