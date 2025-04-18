@@ -1,5 +1,9 @@
-# Deb install with sudo apt get
+rich
 dnspython
 python-nmap
-python-termcolor
-pip install python-whois --break-system-packages
+termcolor
+whois
+python-dotenv
+requests
+avahi-resolve
+dns-sd
