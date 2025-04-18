@@ -4,6 +4,8 @@ import requests
 def get_subdomains_securitytrails(domain, api_key):
     rprint(f"\n[bold purple]#### Fetching subdomains from SecurityTrails...[/bold purple]")
     url = f"https://api.securitytrails.com/v1/domain/{domain}/subdomains"
+
+    ## Set the APIKEY header to be used in the request
     headers = {"APIKEY": api_key}
 
     try:

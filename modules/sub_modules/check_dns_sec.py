@@ -6,9 +6,11 @@ def check_dns_sec(self):
     try:
         output = subprocess.check_output(f"dig +dnssec {self.target}", shell=True)
         decoded = output.decode().lower()
+        
+        ## ad denotes the presense of dnssec
         if 'ad' in decoded:
-            print(color_text(f"- ✅ DNSSEC is enabled for {self.target}", "green"))
+            print(color_text(f"- DNSSEC is enabled for {self.target}", "green"))
         else:
-            print(color_text(f"- ❌ DNSSEC not detected for {self.target}", "red"))
+            print(color_text(f"- DNSSEC not detected for {self.target}", "red"))
     except subprocess.CalledProcessError as e:
-        print(color_text(f"- ❌ DNSSEC check failed: {e}", "red"))
+        print(color_text(f"- DNSSEC check failed: {e}", "red"))

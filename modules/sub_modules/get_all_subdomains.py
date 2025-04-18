@@ -3,13 +3,11 @@ from modules.sub_modules.get_subdomains_securitytrails import get_subdomains_sec
 from modules.sub_modules.query_crtsh import query_crtsh
 
 def get_all_subdomains(target, api_keys):
+    ## Create an empty list to combine results 
     all_subdomains = set()
     securitytrails_api_key = api_keys.get("securitytrails")
-
-    # ## Debug Statements
-    # print(f"Using target: {target}")
-    # print(f"API Keys: {api_keys}")
     
+    ## TODO Create a way to load all api keys, reflect properly loaded to the console.
     if not securitytrails_api_key:
         print("[!] No API key for SecurityTrails provided.")
         return []
