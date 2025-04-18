@@ -66,7 +66,7 @@ python3 main.py dns dns_zone_transfer example.com
 - Creation Date: 1997-09-15
 
 ### Zone Transfer
-- ❌ Zone transfer failed: Transfer failed: REFUSED
+- Zone transfer failed: Transfer failed: REFUSED
 ```
 
 ## API Key Support
