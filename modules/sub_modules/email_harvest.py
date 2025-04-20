@@ -1,4 +1,4 @@
-from rich import print
+from rich import print as rprint
 import requests
 import re
 
@@ -9,7 +9,7 @@ def email_harvest(self):
         return
 
     domain = self.target
-    print(f"\n[bold yellow]### Searching for email addresses related to {domain}[/bold yellow]")
+    rprint(f"\n[bold cyan]### Searching for email addresses related to {domain}[/bold cyan]")
 
     try:
         # Query crt.sh for the domain
@@ -17,7 +17,7 @@ def email_harvest(self):
         resp = requests.get(url, timeout=10)
 
         if resp.status_code != 200:
-            print(f"[red]- Failed to fetch data from crt.sh[/red]")
+            rprint(f"[red]- Failed to fetch data from crt.sh[/red]")
             return
 
         ## Load the response into data for email scrape
@@ -30,11 +30,11 @@ def email_harvest(self):
             emails.update(matches)
 
         if emails:
-            print(f"[bold green]#### Found {len(emails)} emails:[/bold green]")
+            rprint(f"[bold green]#### Found {len(emails)} emails:[/bold green]")
             for email in sorted(emails):
-                print(f"[cyan]- {email}[/cyan]")
+                rprint(f"[cyan]- {email}[/cyan]")
         else:
-            print("[yellow]- No emails found[/yellow]")
+            rprint("[yellow]- No emails found[/yellow]")
 
     except Exception as e:
-        print(f"[red][!] Error during email harvesting: {e}[/red]")
+        rprint(f"[red][!] Error during email harvesting: {e}[/red]")

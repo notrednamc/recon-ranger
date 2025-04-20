@@ -1,29 +1,44 @@
-import platform
+from zeroconf import Zeroconf, ServiceBrowser, ServiceListener
 from core.utils import color_text
-import subprocess
+import socket
+import time
+from rich import print as rprint
+
+class HostnameResolver(ServiceListener):
+    def __init__(self, target):
+        self.target = target
+        self.resolved_ip = None
+
+    def remove_service(self, zeroconf, type, name):
+        pass
+
+    def add_service(self, zeroconf, type, name):
+        info = zeroconf.get_service_info(type, name)
+        if info and self.target in name:
+            addresses = info.parsed_addresses()
+            if addresses:
+                self.resolved_ip = addresses[0]
+
+    def update_service(self, zeroconf, type, name):
+        pass
 
 def resolve_local_hostname(target):
-    print(color_text("\n### Resolving hostname", "cyan"))
-    try:
-        if platform.system() == "Linux":
-            cmd = ["avahi-resolve", "-n", target.target]
-        elif platform.system() == "Darwin":
-            cmd = ["dns-sd", "-G", "v4", target.target]
-        else:
-            print(color_text("- Unsupported OS for .local resolution", "red"))
-            return None
-        
-        result = subprocess.check_output(cmd, stderr=subprocess.STDOUT).decode()
-        if "No result" in result:
-            print(color_text("- No result from avahi-resolve", "yellow"))
-            return None
+    rprint(color_text("\n### Resolving hostname with zeroconf", "cyan"))
 
-        if platform.system() == "Linux" and result:
-            return result.strip().split()[-1]
-        elif platform.system() == "Darwin":
-            for line in result.splitlines():
-                if "Add" in line and "." in line:
-                    return line.strip().split()[-1]
-    except subprocess.CalledProcessError as e:
-        print(color_text(f"- Hostname resolution failed: {e.output.decode()}", "red"))
-    return None
+    zeroconf = Zeroconf()
+    listener = HostnameResolver(target)
+
+    # Browse all services to find one matching the hostname
+    browser = ServiceBrowser(zeroconf, "_services._dns-sd._udp.local.", listener)
+
+    # Give some time for discovery
+    time.sleep(2)
+
+    zeroconf.close()
+
+    if listener.resolved_ip:
+        rprint(color_text(f"- Resolved {target} to {listener.resolved_ip}", "green"))
+        return listener.resolved_ip
+    else:
+        rprint(color_text(f"- Could not resolve {target}", "red"))
+        return None

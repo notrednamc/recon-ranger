@@ -1,6 +1,8 @@
 from pathlib import Path
 import os
 import importlib
+from rich import print as rprint
+import json
 
 ## Load the API Keys file in config/api_keys.txt
 def load_api_keys(file_path='config/api_keys.txt'):
@@ -9,16 +11,14 @@ def load_api_keys(file_path='config/api_keys.txt'):
     if not path.is_file() or path.stat().st_size == 0:
         print(color_text(f"\n[ No API keys found in config/api_keys.txt ]", "red"))
         return api_keys  # Empty dict if none found
+    
     with path.open("r") as f:
-        for line in f:
-            line = line.strip()
-            if not line or line.startswith("#"):
-                continue  # Skip blank lines and comments
-            if ":" in line:
-                label, key = line.split(":", 1)
-                api_keys[label.strip()] = key.strip()
-            else:
-                print(f"[!] Skipping malformed line: {line}")
+        api_keys = json.load(f)
+    
+    rprint(f"\n[bold yellow][ API Keys Loaded ][/bold yellow]")
+    for key, value in api_keys.items():
+        rprint(f"[bold green][ {key}:{value} ][/bold green]")
+
     return api_keys
 
 ## Load method to be used into calling class 'self'
@@ -42,7 +42,7 @@ def load_and_bind_methods(instance, methods_map):
 ## TODO: Integrate Seclists Subdomain Wordlist
 def get_default_wordlist(filename="subdomains.txt"):
     base_dir = os.path.dirname(__file__)
-    return os.path.abspath(os.path.join(base_dir, "..", "data", "wordlists", filename))
+    return os.path.join("data", "wordlists", filename)
 
 ## Custom colors
 ## Remove this infavor of rprint

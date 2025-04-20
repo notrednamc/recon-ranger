@@ -35,11 +35,15 @@ class RedTeamModule(ABC):
         try:
             method()
         except Exception as e:
-            print(f"[!] Error running `{method_name}`: {e}")
+            rprint(f"[red] Error running `{method_name}`: {e}[/red]")
 
     @abstractmethod ## GPT suggestion, not sure I get it
     def run(self):
         pass
+
+    def add_result(self, result):
+        if result:
+            self.results.append(result)
 
     # ## Logging not being used
     # def log_info(self, message):
@@ -58,6 +62,4 @@ class RedTeamModule(ABC):
     #     prefix = "#" * level
     #     rprint(f"\n[purple]{prefix} {title}[/purple]")
 
-    def add_result(self, result):
-        if result:
-            self.results.append(result)
+    

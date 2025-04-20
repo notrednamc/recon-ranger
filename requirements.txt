@@ -2,8 +2,8 @@ rich
 dnspython
 python-nmap
 termcolor
-whois
+python-whois
 python-dotenv
 requests
-avahi-resolve
-dns-sd
+zeroconf
+trufflehog3

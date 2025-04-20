@@ -5,7 +5,7 @@ import argparse
 from core.banner import show_banner
 import argparse
 import sys
-from modules.dns_enum import DNSModule
+from modules.dns import DNSModule
 from modules.osintel import OSINTModule
 from rich.console import Console
 from core import banner
@@ -15,7 +15,8 @@ console = Console()
 
 banner.show_banner("label")
 
-# Map module types to class and help function
+## Map module types to class and help function
+## This should be the input module name
 module_map = {
     "dns"   : (DNSModule, print_dns_help),
     "osint" : (OSINTModule, print_osint_help),

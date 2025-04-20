@@ -1,15 +1,14 @@
 import requests
 from rich import print as rprint
-from urllib.parse import quote
 
 def query_crtsh(domain):
-    rprint("[bold cyan]\n### Fetching subdomains from crt.sh...[/bold cyan]")
-    url = f"https://crt.sh/?q=%25.{domain}&output=json"
+    rprint(f"\n[bold cyan]### Passive subdomain lookup with certsh + {domain.target}[/bold cyan]")
+    url = f"https://crt.sh/?q=%25.{domain.target}&output=json"
 
     try:
         response = requests.get(url, timeout=10)
         if response.status_code != 200:
-            print(f"[red][!] crt.sh error: {response.status_code}[/red]")
+            rprint(f"[red]- crt.sh error: {response.status_code}[/red]")
             return set()
 
         data = response.json()
@@ -20,11 +19,15 @@ def query_crtsh(domain):
         for entry in data:
             name_value = entry.get("name_value", "")
             for sub in name_value.split("\n"):
-                if domain in sub:
+                if domain.target in sub:
                     subdomains.add(sub.strip())
-
+        
+        rprint(f"\n[purple]#### Found [white]{len(subdomains)}[/white] subdomains for [white][bold]{domain.target}[/bold][/purple]")
+        
+        for subdomain in sorted(subdomains):    
+            rprint(f"[green]- {subdomain}[/green]") 
         return subdomains
 
     except Exception as e:
-        print(f"[red]- Error fetching crt.sh data: {e}[/red]")
+        rprint(f"[red]- Error fetching crt.sh data: {e}[/red]")
         return set()

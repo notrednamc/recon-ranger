@@ -1,7 +1,7 @@
 
 from core.utils import get_default_wordlist
-from core.utils import color_text
 import socket
+from rich import print as rprint
 
 def subdomain_enum(self):
     ## Load provided wordlist, or get the default
@@ -9,12 +9,11 @@ def subdomain_enum(self):
 
     ## Validate the file
     if not self._validate_file(wordlist):
-        msg = f"Wordlist not found or unreadable: {wordlist}"
-        print(color_text(f"{msg}", "red"))
+        rprint(f"[red]- Wordlist not found or unreadable: {wordlist}[/red]")
         return
 
-    print(color_text(f"\n#### Brute-forcing subdomains using {wordlist}", "cyan"))
-    print(color_text(f"- Wordlist: `{wordlist}`", "yellow"))
+    rprint(f"\n[bold cyan]### Brute-forcing subdomains using {wordlist}[/bold cyan]")
+    rprint(f"[green]- Wordlist: `{wordlist}`[/green]")
     
     try:
         with open(wordlist, "r") as file:
@@ -23,10 +22,9 @@ def subdomain_enum(self):
                 fqdn = f"{subdomain}.{self.target}"
                 try:
                     ip = socket.gethostbyname(fqdn)
-                    msg = f"Found: {fqdn} -> {ip}"
-                    print(color_text(f"- {msg}", "green"))
+                    rprint(f"[green]- Found: {fqdn} -> {ip}[/green]")
                 except Exception:
-                    print(color_text(f"- {fqdn}", "red"))
+                    rprint(f"[red]- {fqdn}[/red]")
     except Exception as e:
         msg = f"Error reading wordlist: {e}"
-        print(color_text(f"{msg}", "red"))
+        rprint(f"[red]{msg}[/red]")
