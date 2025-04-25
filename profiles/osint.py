@@ -1,7 +1,9 @@
 from core.base_module import RedTeamModule
-from core.utils import load_api_keys, load_and_bind_methods
-from modules.sub_modules.get_all_subdomains import get_all_subdomains
+from core.utils import load_and_bind_methods
+# from profiles.sub_modules.get_all_subdomains import get_all_subdomains
 from rich import print as rprint
+from modules.github_scraper import GitHubDorker
+
 
 class OSINTModule(RedTeamModule):
     def __init__(self, target, options=None):
@@ -16,21 +18,23 @@ class OSINTModule(RedTeamModule):
         # self.methods['get_all_subdomains'] = self.subdomain_lookup_wrapper
 
         ## Load the method name, mapped to the function into self
-        load_and_bind_methods(self, {
+        # load_and_bind_methods(self, {
             # subdomain lookup executes first ^^^
-            'whois_lookup'       : 'modules.sub_modules.whois_lookup.whois_lookup',
-            'email_harvest'      : 'modules.sub_modules.email_harvest.email_harvest',
-            'get_all_subdomains' : 'modules.sub_modules.get_all_subdomains.get_all_subdomains'
+            # 'whois_lookup'       : 'modules.sub_modules.whois_lookup.whois_lookup',
+            # 'email_harvest'      : 'modules.sub_modules.email_harvest.email_harvest',
+            # 'get_all_subdomains' : 'modules.sub_modules.get_all_subdomains.get_all_subdomains'
             # 'trufflehog'         : 'modules.submodules.trufflehog
-            # 'github'             : 'modules.submodules.github
+            # 'github'             : 'tools.github_scraper.GitHubDorker'
             # 'google'             : 'modules.submodules.google
             # 'haveibeenpwned'     : 'modules.submodules.hibp
-        })
+        # })
 
     # Run method
     def run(self):
-        for method_name in self.methods:
-            self.run_method(method_name)
+        githubdorker = GitHubDorker(self.target, options={})
+        githubdorker.run()
+        # for method_name in self.methods:
+        #     self.run_method(method_name)
 
     ## Wrapper for get_all_subdomains to call ALL subdomain methods
     # def subdomain_lookup_wrapper(self):   

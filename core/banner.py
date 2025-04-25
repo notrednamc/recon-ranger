@@ -1,4 +1,3 @@
-from core.utils import color_text
 from rich.console import Console
 from rich import print as rprint
 

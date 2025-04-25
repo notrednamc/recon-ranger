@@ -19,6 +19,7 @@ class DNSModule(RedTeamModule):
             # 'dns_service_version'    : 'modules.sub_modules.dns_service_version.dns_service_version',
             # 'resolve_local_hostname' : 'modules.sub_modules.resolve_local_hostname.resolve_local_hostname',
             # 'query_crtsh'            : 'modules.sub_modules.query_crtsh.query_crtsh',
+            # 'dnsdumpster'            : 'modules.sub_modules.dnsdumpster.dnsdumpster'
         })
 
     # Run method

@@ -49,20 +49,18 @@ pip install -r requirements.txt
 ## Adding Modules
 ```sh
 To add your own:
-    Create a file in modules/sub_modules/ (e.g., my_enum.py)
-    Add your function (e.g., def my_enum(target):)
-    Import and map it in the OSINTModule loader
-    Done!
+Create a file in modules/sub_modules/ (e.g., my_enum.py)
+Add your function (e.g., def my_enum(target):)
+Import and map it in the OSINTModule loader
+Done!
 ```
 ---
 
 ## Usage
 - Command syntax
 ```sh
-python3 main.py -h  ## Show general help
-python3 main.py dns -h ## Show dns module help
-python3 main.py osint all example.com  ## Run all modules in the OSINT profile
-python3 main.py dns dns_zone_transfer example.com
+python3 main.py --module <module_Name> --target <IP/Domain> --options
+python3 main.py --module host_discovery --target 192.168.1.10 --ports 22,80,443
 ```
 ---
 
@@ -105,3 +103,20 @@ SECURITYTRAILS=your_api_key
 
 ## Contact
 - Built with ❤️ by Gnomes
+
+
+
+
+
+
+
+```python
+class MyTool:
+    def __init__(self, target, options=None):
+        self.target = target
+        self.options = options or {}
+
+    def run(self):
+        # Your core logic here
+        print(f"Running MyTool on {self.target}")
+```
