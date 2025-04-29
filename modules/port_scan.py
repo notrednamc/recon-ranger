@@ -11,13 +11,12 @@ class PortScan(RedTeamModule):
         print(f"[bold cyan]### Scanning ports on {self.target}[/bold cyan]")
         nmap_cmd = ["nmap", "-Pn", "-T4"]
 
-        if self.ports == "-p-":
+        if self.ports and self.ports.strip() == "all":
             nmap_cmd += ["-p-", self.target]
         elif self.ports:
             nmap_cmd += ["-p", self.ports, self.target]
         else:
             nmap_cmd += ["-F", self.target]  # fast scan
-
         try:
             result = subprocess.run(nmap_cmd, capture_output=True, text=True, timeout=300)
 

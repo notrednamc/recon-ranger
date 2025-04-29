@@ -45,7 +45,7 @@ def main():
     
     # Expand here for future shared options
     # parser.add_argument("--api-key", help="Optional API key for tools that support it")
-
+    
     args = parser.parse_args()
     
     extra_options = {}
