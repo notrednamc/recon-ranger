@@ -28,7 +28,7 @@
 
 1. Clone the repo:
 ```sh
-git clone https://github.com/yourname/ReconRanger.git && cd ReconRanger
+git clone https://github.com/notrednamc/ReconRanger.git && cd ReconRanger
 ```
 2. Install Dependencies:
 ```sh
@@ -66,7 +66,7 @@ python3 main.py dns dns_zone_transfer example.com
 - Creation Date: 1997-09-15
 
 ### Zone Transfer
-- ❌ Zone transfer failed: Transfer failed: REFUSED
+- Zone transfer failed: Transfer failed: REFUSED
 ```
 
 ## API Key Support
