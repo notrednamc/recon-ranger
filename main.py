@@ -24,8 +24,8 @@ profile_map = {
     "osint": (OSINTModule, osint_help)
 }
 
-# Tool map
-tool_map = {
+# Module map
+module_map = {
     "github_dorker"  : (GitHubDorker, github_dorker_help),
     "whois_lookup"   : (WhoIsLookup, whois_lookup_help),
     "query_crtsh"    : (QueryCrtsh, query_crtsh_help),
@@ -73,8 +73,8 @@ def main():
         return
 
     # === Tool ===
-    if keyword in tool_map:
-        tool_class, help_func = tool_map[keyword]
+    if keyword in module_map:
+        tool_class, help_func = module_map[keyword]
 
         try:
             tool_instance = tool_class(target, options=extra_options)

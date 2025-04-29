@@ -75,7 +75,7 @@ python3 main.py --module host_discovery --target 192.168.1.10 --ports 22,80,443
 - Creation Date: 1997-09-15
 
 ### Zone Transfer
-- ❌ Zone transfer failed: Transfer failed: REFUSED
+- Zone transfer failed: Transfer failed: REFUSED
 ```
 ---
 
