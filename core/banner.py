@@ -1,5 +1,5 @@
-from core.utils import color_text
 from rich.console import Console
+from rich import print as rprint
 
 console = Console()
 
@@ -21,4 +21,4 @@ def banner_name():
     [/bold red]
 """
     console.print(banner)
-    print(color_text("[ Red Team Modular Toolkit ]", "yellow"))
+    rprint("[bold yellow][ Red Team Modular Toolkit ][/bold yellow]")

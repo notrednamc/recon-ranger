@@ -2,7 +2,7 @@ from rich.console import Console
 
 console = Console()
 
-def print_general_help():
+def general_help():
     console.print("""
 [bold cyan]Usage:[/bold cyan]
   ./main.py <module> <method> <target> [--options]
@@ -21,7 +21,7 @@ def print_general_help():
   ./main.py dns --list
 """)
 
-def print_dns_help():
+def dns_help():
     console.print("""
 [bold cyan]DNS Module Help:[/bold cyan]
 
@@ -40,7 +40,7 @@ def print_dns_help():
   ./main.py dns subdomain_enum example.com --wordlist /path/to/list
 """)
 
-def print_osint_help():
+def osint_help():
     console.print("""
 [bold cyan]OSINT Module Help:[/bold cyan]
 
@@ -57,3 +57,44 @@ def print_osint_help():
 [bold cyan]Example:[/bold cyan]
   ./main.py osint whois example.com
 """)
+    
+def github_dorker_help():
+    """
+    Placeholder!!
+    """
+
+def whois_lookup_help():
+    """
+    Placeholder!!
+    """
+
+def query_crtsh_help():
+    """
+    Placeholder!!
+    """
+
+def host_discovery_help():
+    """
+    Placeholder!!
+    """
+
+def port_scan_help():
+  """
+  [bold cyan]PortScanModule - TCP Port Scanner[/bold cyan]
+
+  Usage:
+      python3 main.py port_scan [options] <target>
+
+  Options:
+      [green]--ports <list>[/green]       Comma-separated list of ports to scan (e.g. 22,80,443)
+      [green]-p-[/green]                  Scan all 65535 TCP ports
+
+  Notes:
+      • Host discovery is disabled by default ([cyan]-Pn[/cyan] is always used).
+      • The scanner assumes all specified targets are online.
+
+  Examples:
+      python3 main.py port_scan --ports 22,80,443 target.com
+      python3 main.py port_scan -p- 192.168.1.0/24
+  """
+

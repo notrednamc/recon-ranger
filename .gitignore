@@ -50,3 +50,6 @@ Thumbs.db
 
 # API Keys or config secrets
 # config/api_keys.txt
+
+# Personal Note Pad
+notepad.MD

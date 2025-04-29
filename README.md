@@ -30,31 +30,40 @@
 ```sh
 git clone https://github.com/notrednamc/ReconRanger.git && cd ReconRanger
 ```
-2. Install Dependencies:
+
+2. Install Dependencies: (venv Recommended)
 ```sh
+python -m venv reconranger      ## Create venv
+source reconranger/bin/activate ## Activate venv
+# deactivate                    ## To stop venv
+# rm -r venv                    ## To delete venv
+
 pip install -r requirements.txt
 ```
+
 3. Add you API keys (optional, e.g. Shodan) in config/api_keys.json or as environment variables via .env
 - Supported key names are preloaded
 - JSON format
+---
 
 ## Adding Modules
 ```sh
 To add your own:
-    Create a file in modules/sub_modules/ (e.g., my_enum.py)
-    Add your function (e.g., def my_enum(target):)
-    Import and map it in the OSINTModule loader
-    Done!
+Create a file in modules/sub_modules/ (e.g., my_enum.py)
+Add your function (e.g., def my_enum(target):)
+Import and map it in the OSINTModule loader
+Done!
 ```
+---
 
 ## Usage
 - Command syntax
 ```sh
-python3 main.py -h  ## Show general help
-python3 main.py dns -h ## Show dns module help
-python3 main.py osint all example.com  ## Run all modules in the OSINT profile
-python3 main.py dns dns_zone_transfer example.com
+python3 main.py --module <module_Name> --target <IP/Domain> --options
+python3 main.py --module host_discovery --target 192.168.1.10 --ports 22,80,443
 ```
+---
+
 ### Example Output
 ```sh
 ### Subdomain Enumeration for google.com
@@ -68,6 +77,7 @@ python3 main.py dns dns_zone_transfer example.com
 ### Zone Transfer
 - Zone transfer failed: Transfer failed: REFUSED
 ```
+---
 
 ## API Key Support
 - Some modules use APIs. Add your keys like so:
@@ -83,6 +93,7 @@ config/api_keys.json
 ```sh
 SECURITYTRAILS=your_api_key
 ```
+---
 
 ## Contributing
 - PRs and feature requests are welcome! Open an issue or fork and go.

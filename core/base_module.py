@@ -1,7 +1,6 @@
 from abc import ABC, abstractmethod
 from rich import print as rprint
-from core.utils import load_api_keys
-from core.utils import color_text
+# from core.utils import load_api_keys
 
 class RedTeamModule(ABC):
     def __init__(self, target, options=None):
@@ -10,7 +9,7 @@ class RedTeamModule(ABC):
         self.results = []
         self.has_printed_header = False
         self.methods = {}
-        self.api_keys = load_api_keys() or {}
+        # self.api_keys = load_api_keys() or {}
 
     def bind_method(self, name, method):
         self.methods[name] = method.__get__(self)
@@ -18,7 +17,7 @@ class RedTeamModule(ABC):
     def run_method(self, method_name):
         ## Remove when support for .local is functional
         if self.target.endswith(".local"):
-            print(color_text(f"- .local hostnames not supported", "red"))
+            rprint(f"[red]- .local hostnames not supported[/red]")
             return
         
         method = self.methods.get(method_name)
@@ -35,11 +34,15 @@ class RedTeamModule(ABC):
         try:
             method()
         except Exception as e:
-            print(f"[!] Error running `{method_name}`: {e}")
+            rprint(f"[red] Error running `{method_name}`: {e}[/red]")
 
     @abstractmethod ## GPT suggestion, not sure I get it
     def run(self):
         pass
+
+    def add_result(self, result):
+        if result:
+            self.results.append(result)
 
     # ## Logging not being used
     # def log_info(self, message):
@@ -58,6 +61,4 @@ class RedTeamModule(ABC):
     #     prefix = "#" * level
     #     rprint(f"\n[purple]{prefix} {title}[/purple]")
 
-    def add_result(self, result):
-        if result:
-            self.results.append(result)
+    

@@ -1,5 +1,0 @@
-{
-    "securitytrails" : "YOUR_API_KEY"
-    "crtsh"          : "YOUR_API_KEY"
-    "shodan"         : "YOUR_API_KEY"
-}
