@@ -87,7 +87,7 @@ def port_scan_help():
 
   Options:
       [green]--ports <list>[/green]       Comma-separated list of ports to scan (e.g. 22,80,443)
-      [green]-p-[/green]                  Scan all 65535 TCP ports
+      [green]all[/green]                  Scan all 65535 TCP ports
 
   Notes:
       • Host discovery is disabled by default ([cyan]-Pn[/cyan] is always used).
